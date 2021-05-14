@@ -36,7 +36,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider  {
         
 		UserDetails userDetails = usuarioRepository.loadUserByUsername(username);
 		if(userDetails == null)
-			throw new UsernameNotFoundException("Usuario NO encontrado");
+			throw new UsernameNotFoundException("Usuario NOO encontrado");
 		
 		if(!passwordEncoder.matches(password, userDetails.getPassword())){
 			throw new BadCredentialsException("Usuario y/o clave invalido");

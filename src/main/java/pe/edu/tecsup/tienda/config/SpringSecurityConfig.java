@@ -14,6 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter  {
 
+	
+	
+	
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new PasswordEncoder() {	// No encriptado, Texto Plano
@@ -63,17 +67,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter  {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider);
 	}
-	*/
+	//*/
 
+	// Parte 04
 	@Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http
+        
+		http
         // Configure authorizations
-//	        .authorizeRequests()
-//	        .antMatchers("/" /*, "/**"*/).permitAll()
-//	        .antMatchers("/home/**").authenticated()
+	        .authorizeRequests()
+	        .antMatchers("/").permitAll()
+	        .antMatchers("/productos/**").authenticated()
 //	        .antMatchers("/admin/**").hasAnyAuthority("Administrador")
-//    	.and()
+    	.and()
         // Change login
         	.formLogin()
         	.loginPage("/login")
@@ -90,5 +96,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter  {
 	.csrf().disable();
     }
 
+	
 	
 }
