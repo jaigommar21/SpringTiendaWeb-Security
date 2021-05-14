@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,6 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter  {
 		auth.userDetailsService(userDetailsService);
 	} */
 	
+	/*  Parte 3
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
 
@@ -61,8 +63,32 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter  {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider);
 	}
+	*/
 
-
+	@Override
+    protected void configure(final HttpSecurity http) throws Exception {
+        http
+        // Configure authorizations
+//	        .authorizeRequests()
+//	        .antMatchers("/" /*, "/**"*/).permitAll()
+//	        .antMatchers("/home/**").authenticated()
+//	        .antMatchers("/admin/**").hasAnyAuthority("Administrador")
+//    	.and()
+        // Change login
+        	.formLogin()
+        	.loginPage("/login")
+        	.loginProcessingUrl("/authenticate")
+        	.defaultSuccessUrl("/")
+        	.failureUrl("/login?error")
+        	.usernameParameter("username").passwordParameter("password")
+    	.and()
+    	// Change logout
+        	.logout()
+        	.logoutUrl("/logout")
+        	.logoutSuccessUrl("/login")
+        .and()
+	.csrf().disable();
+    }
 
 	
 }
